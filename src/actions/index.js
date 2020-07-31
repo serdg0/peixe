@@ -1,8 +1,6 @@
 const CHANGE_SEARCH = 'CHANGE_SEARCH';
 
-const searchAction = query => ({
+export const searchAction = query => ({
     type: CHANGE_SEARCH,
     query,
-})
-
-export default searchAction;
+});

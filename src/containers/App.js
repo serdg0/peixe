@@ -1,8 +1,9 @@
 import React from 'react';
+import Search from './searchForm';
 
 function App() {
   return (
-    <h1>Hola</h1>
+    <Search />
   );
 }
 
