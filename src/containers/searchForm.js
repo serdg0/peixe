@@ -8,6 +8,7 @@ import { searchAction } from '../actions/index';
 
 const Search = () => {
     const [query, setQuery] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
     const dispatch = useDispatch();
 
     const handleChange = event => {
@@ -16,25 +17,28 @@ const Search = () => {
     }
 
     const handleSearch = () => {
-        const url = `https://www.omdbapi.com/?s=${query}&apikey=${process.env.REACT_APP_API_KEY}`;
+        const url = `https://www.omdbapi.com/?t=${query}&apikey=${process.env.REACT_APP_API_KEY}`;
         axios.get(url)
             .then(function (response) {
+                setErrorMsg('');
+                console.log(response)
                 dispatch(searchAction(response.data.Search));
             })
             .catch(function (error) {
-                console.log(typeof error);
+                setErrorMsg('No se ha encontrado la película con este titulo');
             });
     }
 
     return (
         <Form>
             <Form.Group controlId="formGroupSearch">
-                <Form.Label>Búsqueda</Form.Label>
-                <Form.Control type="search" placeholder="Ingrese el titulo de la pelicula" onChange={handleChange} />
+                <Form.Label><h1>Búsqueda</h1></Form.Label>
+                <Form.Control type="search" placeholder="Ingrese el titulo de la película" onChange={handleChange} />
             </Form.Group>
             <Button variant="primary" type="button" onClick={handleSearch}>
-                Submit
+                Buscar
             </Button>
+            <p>{errorMsg}</p>
         </Form>
     )
 }

@@ -1,14 +1,18 @@
 import React from 'react';
+import MovieModal from "./movieModal";
+import { nameLogic } from '../logic/nameLogic';
 
 const Movie = props => {
-    const { movie: { Poster, Title, Type, Year, imdbID } } = props;
-    const tipo = Type === 'movie' ? 'pelicula' : 'serie';
-    const list = [Title, Year, tipo].map(x => <td>{x}</td>);
+    const { movie, movie: { Title, Type, Year, imdbID } } = props;
+    const tipo = nameLogic(Type);
+    const ver = <MovieModal movie={movie} />;
+    const list = [Title, Year, tipo, ver].map(x => <td>{x}</td>);
+
     return (
-        <tr>
+        <tr key={imdbID}>
             {list}
         </tr>
     )
-}
+};
 
 export default Movie;

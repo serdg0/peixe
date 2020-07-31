@@ -7,7 +7,7 @@ const MovieList = () => {
     const movies = useSelector(state => state.movies);
     
     const list = movies.length === 0 ? 
-    <td colSpan="3" className="justify-content-center">Haga una búsqueda</td> : 
+    <td colSpan="4">Haga una búsqueda</td> :
     movies.map(movie => <Movie movie={movie} />);
 
     return (
@@ -17,6 +17,7 @@ const MovieList = () => {
                     <th>Titulo</th>
                     <th>Año</th>
                     <th>Tipo</th>
+                    <th>Ver</th>
                 </tr>
             </thead>
             <tbody>
