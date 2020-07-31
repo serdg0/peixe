@@ -22,10 +22,7 @@ const Search = () => {
                 dispatch(searchAction(response.data.Search));
             })
             .catch(function (error) {
-                console.log(error);
-            })
-            .then(function () {
-                // always executed
+                console.log(typeof error);
             });
     }
 
