@@ -17,11 +17,10 @@ const Search = () => {
     }
 
     const handleSearch = () => {
-        const url = `https://www.omdbapi.com/?t=${query}&apikey=${process.env.REACT_APP_API_KEY}`;
+        const url = `https://www.omdbapi.com/?s=${query}&apikey=${process.env.REACT_APP_API_KEY}`;
         axios.get(url)
             .then(function (response) {
                 setErrorMsg('');
-                console.log(response)
                 dispatch(searchAction(response.data.Search));
             })
             .catch(function (error) {

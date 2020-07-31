@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 import Movie from '../components/movie';
 import Table from 'react-bootstrap/Table';
 
