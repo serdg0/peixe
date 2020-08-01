@@ -1,7 +1,7 @@
 import React from 'react';
+import Container from 'react-bootstrap/Container';
 import Search from './searchForm';
 import MovieList from './movieList';
-import Container from 'react-bootstrap/Container';
 import Favorites from './favorites';
 
 function App() {
