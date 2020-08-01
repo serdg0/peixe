@@ -8,7 +8,7 @@ const MovieList = () => {
     
     const list = movies.length === 0 ? 
     <td colSpan="4">Haga una búsqueda</td> :
-    movies.map(movie => <Movie movie={movie} />);
+    movies.map(movie => <Movie key={movie.Title} movie={movie} />);
 
     return (
         <Table responsive striped bordered hover>

@@ -1,30 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { Modal, Card, Button } from 'react-bootstrap';
 import axios from 'axios';
-import { addFavorite } from '../actions/index';
-import { nameLogic } from '../logic/nameLogic';
-import { useDispatch } from 'react-redux';
 
 const MovieModal = props => {
     const { title, poster } = props;
     const [info, setInfo] = useState({});
     const [show, setShow] = useState(false);
-    const dispatch = useDispatch();
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const handleFetch = () => {
+
+    const saveFavorite = () => {
+        const storage = localStorage.getItem('favoritas');
+        const array = JSON.parse(storage);
+        array.push(info);
+        localStorage.setItem('favoritas', JSON.stringify(array));
+    };
+
+    useEffect(() => {
         const url = `https://www.omdbapi.com/?t=${title}&apikey=${process.env.REACT_APP_API_KEY}`;
         axios.get(url)
             .then(function (response) {
                 setInfo(response.data);
             });
-    }
-    const saveFavorite = () => {
-        localStorage.setItem(`${title}`, JSON.stringify(info));
-        dispatch(addFavorite(title));
-    };
-    useEffect(() => {handleFetch()}, []);
+    }, [info]);
     return (
         <>
             <Button variant="info" onClick={handleShow}>
@@ -43,6 +41,7 @@ const MovieModal = props => {
                                 <ul>
                                     <li>Titulo: {title}</li>
                                     <li>Director: {info.Director}</li>
+                                    <li>Premios: {info.Awards}</li>
                                     <li>Género: {info.Genre}</li>
                                     <li>Lanzamiento: {info.Released}</li>
                                     <li>Trama: {info.Plot}</li>

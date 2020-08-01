@@ -6,7 +6,13 @@ const Movie = props => {
     const { movie: { Poster, Title, Type, Year, imdbID } } = props;
     const tipo = nameLogic(Type);
     const ver = <MovieModal title={Title} poster={Poster} />;
-    const list = [Title, Year, tipo, ver].map(x => <td>{x}</td>);
+    let count = 0;
+    const list = [Title, Year, tipo, ver].map(x => {
+        count+= 1;
+        return(
+            <td key={count}>{x}</td>
+        )
+    });
 
     return (
         <tr key={imdbID}>

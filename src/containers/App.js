@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Favorites from './favorites';
 
 function App() {
+  localStorage.getItem('favoritas') || localStorage.setItem('favoritas', '[]');
   return (
     <Container>
       <Search />
