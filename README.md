@@ -6,3 +6,4 @@ Las herramientas que utilice son:
 * Localstorage
 * React-bootstrap
 
+[Visita el sitio!](https://peixe-project.netlify.app/)

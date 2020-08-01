@@ -17,6 +17,7 @@ const MovieModal = props => {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const url = `https://www.omdbapi.com/?t=${title}&apikey=${process.env.REACT_APP_API_KEY}`;
     axios.get(url)
       .then(response => {
