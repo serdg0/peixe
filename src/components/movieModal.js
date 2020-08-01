@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Modal, Card, Button } from 'react-bootstrap';
 import axios from 'axios';
-import { showAction } from '../actions/index';
+import { addFavorite } from '../actions/index';
 import { nameLogic } from '../logic/nameLogic';
 import { useDispatch } from 'react-redux';
 
@@ -10,6 +10,7 @@ const MovieModal = props => {
     const { title, poster } = props;
     const [info, setInfo] = useState({});
     const [show, setShow] = useState(false);
+    const dispatch = useDispatch();
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const handleFetch = () => {
@@ -20,7 +21,8 @@ const MovieModal = props => {
             });
     }
     const saveFavorite = () => {
-        localStorage.setItem('Favorites', info);
+        localStorage.setItem(`${title}`, JSON.stringify(info));
+        dispatch(addFavorite(title));
     };
     useEffect(() => {handleFetch()}, []);
     return (
@@ -54,7 +56,7 @@ const MovieModal = props => {
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Button variant="primary">Favoritos</Button>
+                    <Button variant="primary" onClick={saveFavorite}>Agregue a Favoritos</Button>
                 </Modal.Footer>
             </Modal>
         </>

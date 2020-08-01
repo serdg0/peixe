@@ -1,12 +1,12 @@
 const CHANGE_SEARCH = 'CHANGE_SEARCH';
-const SHOW_MOVIE = 'SHOW_MOVIE';
+const ADD_FAVORITE = 'ADD_FAVORITE';
 
 export const searchAction = query => ({
     type: CHANGE_SEARCH,
     query,
 });
 
-export const showAction = movie => ({
-    type: SHOW_MOVIE,
+export const addFavorite = movie => ({
+    type: ADD_FAVORITE,
     movie
 })
