@@ -1,34 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import Modal from 'react-bootstrap/Modal';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
+import { Modal, Card, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { showAction } from '../actions/index';
 import { nameLogic } from '../logic/nameLogic';
 import { useDispatch } from 'react-redux';
 
 const MovieModal = props => {
+    const { title, poster } = props;
+    const [info, setInfo] = useState({});
     const [show, setShow] = useState(false);
-    const showData = useSelector(state => state.show);
-
-    const { movie: { Poster, Title, Type, Year, imdbID } } = props;
-    const tipo = nameLogic(Type);
-    const list = [Title, Year, tipo].map(x => <li>{x}</li>);
-    const dispatch = useDispatch();
     const handleClose = () => setShow(false);
-    const handleShow = () => {
-        const url = `https://www.omdbapi.com/?t=${Title}&apikey=${process.env.REACT_APP_API_KEY}`;
+    const handleShow = () => setShow(true);
+    const handleFetch = () => {
+        const url = `https://www.omdbapi.com/?t=${title}&apikey=${process.env.REACT_APP_API_KEY}`;
         axios.get(url)
-        .then(function (response) {
-            dispatch(showAction(response.data));
-        })
-        .catch(function (error) {
-            //setErrorMsg('No se ha encontrado la película con este titulo');
-        });
-        console.log(showData)
-        setShow(true);
+            .then(function (response) {
+                setInfo(response.data);
+            });
     }
+    const saveFavorite = () => {
+        localStorage.setItem('Favorites', info);
+    };
+    useEffect(() => {handleFetch()}, []);
     return (
         <>
             <Button variant="info" onClick={handleShow}>
@@ -36,16 +30,23 @@ const MovieModal = props => {
             </Button>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{Title}</Modal.Title>
+                    <Modal.Title>{title}</Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
                     <Card>
-                        <Card.Img variant="top" src={Poster} />
+                        <Card.Img variant="top" src={poster} />
                         <Card.Body>
                             <Card.Text>
                                 <ul>
-                                    {list}
+                                    <li>Titulo: {title}</li>
+                                    <li>Director: {info.Director}</li>
+                                    <li>Género: {info.Genre}</li>
+                                    <li>Lanzamiento: {info.Released}</li>
+                                    <li>Trama: {info.Plot}</li>
+                                    <li>Rating en IMDB: {info.imdbRating}</li>
+                                    <li>Duración: {info.Runtime}</li>
+                                    <li>Clasificación: {info.Rated}</li>
                                 </ul>
                             </Card.Text>
                         </Card.Body>
@@ -57,7 +58,7 @@ const MovieModal = props => {
                 </Modal.Footer>
             </Modal>
         </>
-    )
+    );
 }
 
 export default MovieModal;
